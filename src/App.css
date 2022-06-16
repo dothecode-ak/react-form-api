@@ -28,3 +28,13 @@ button:hover {
   text-align: center;
   color: #36a936;
 }
+.dothecode{
+  position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 20px;
+    background-color: black;
+    color: #fff;
+}

@@ -1,13 +1,16 @@
 import "./App.css";
 import { useState } from "react";
+import Dothecode from "./Dothecode";
 function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [message, setMessage] = useState("");
-
   let handleSubmit = async (e) => {
     let errID = document.getElementById("error");
+    let emailRx =
+      /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    let mobRx = /^(\+\d{1,3}[- ]?)?\d{10}$/;
     e.preventDefault();
     console.log(name);
     console.log(email);
@@ -16,8 +19,12 @@ function App() {
       errID.innerHTML = "Please Enter Name.";
     } else if (email === null || email === "") {
       errID.innerHTML = "Please Enter Email.";
+    } else if (!emailRx.test(email)) {
+      errID.innerHTML = "Please Enter Valid Email.";
     } else if (mobileNumber === null || mobileNumber === "") {
       errID.innerHTML = "Please Enter Mobile.";
+    } else if (!mobRx.test(mobileNumber)) {
+      errID.innerHTML = "Please Enter Valid Mobile.";
     } else {
       try {
         let res = await fetch("https://httpbin.org/post", {
@@ -34,6 +41,10 @@ function App() {
           setEmail("");
           setMobileNumber("");
           setMessage("User created successfully");
+          setTimeout(() => {
+            setMessage("");
+          }, 2000);
+
           errID.innerHTML = "";
         } else {
           setMessage("Some error occured");
@@ -85,6 +96,7 @@ function App() {
       <div style={{ textAlign: "center", color: "red" }}>
         <p id="error"></p>
       </div>
+      <Dothecode />
     </>
   );
 }
